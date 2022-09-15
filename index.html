@@ -5,10 +5,54 @@
     <title></title>
     <link rel="stylesheet" href="css/styles.css">
     <!--Font Awesome-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+        integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"
+    />
 </head>
 <body>
     <h1>To Do Avançado</h1>
+    <div class="todo-container">
+        <header>
+        </header>
+        <form id="todo-form">
+            <p>Adicione a sua tarefa</p>
+            <div class="form-control">
+                <input type="text" id="todo-input" placeholder="O que você vai fazer?">
+                <button type="submit">
+                    <i class="fa-thi fa-plus"></i>
+                </button>
+            </div>
+        </form>
+
+        <form id="edit-form">
+            <p>Edite a sua tarefa</p>
+            <div class="form-control">
+                <input type="text" id="edit-input">
+                <button type="submit">
+                    <i class="fa-solid fa-check-double"></i>
+                </button>
+            </div>
+            <button id="cancel-edit-btn" type="submit">
+                Cancelar
+            </button>
+        </form>
+        <div id="toolbar">
+            <div id="search">
+                <h4>Pesquisa:</h4>
+                <form>
+                    <input type="text" id="search-input" placeholder="Buscar">
+                    <button type="submit">
+                        <i class="fa-solid fa-delete-left"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+    </div>
 
     <script src="js/scripts.js"></script>
 </body>
