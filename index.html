@@ -50,8 +50,41 @@
                     </button>
                 </form>
             </div>
+            <div id="filtrar">
+                <h4>Filtrar:</h4>
+                <select id="filter-select">
+                    <option value="all">Todos</option>
+                    <option value="done">Feitos</option>
+                    <option value="todo">A fazer</option>
+                </select>
+            </div>
         </div>
-
+        <div id="todo-list">
+            <div class="tudo">
+                <h3>Estou fazendo alguma coisa...</h3>
+                <button type="finish-todo">
+                    <i class="fa-solid fa-check"></i>
+                </button>
+                <button type="edit-todo">
+                    <i class="fa-solid fa-pen"></i>
+                </button>
+                <button type="remove-todo">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="tudo">
+                <h3>Estudar JS...</h3>
+                <button type="finish-todo">
+                    <i class="fa-solid fa-check"></i>
+                </button>
+                <button type="edit-todo">
+                    <i class="fa-solid fa-pen"></i>
+                </button>
+                <button type="remove-todo">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+        </div>
     </div>
 
     <script src="js/scripts.js"></script>
