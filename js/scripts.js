@@ -6,6 +6,8 @@ const editForm = document.querySelector("#edit-form");
 const editInput = document.querySelector("#edit-input");
 const cancelEditBnt = document.querySelector("#cancel-edit-btn");
 
+let oldInputValue;
+
 // Funções
 const saveTodo = (text) => {
     const todo = document.createElement("div");
@@ -33,7 +35,13 @@ const saveTodo = (text) => {
     todoList.appendChild(todo);
     todoInput.value = "";
     todoInput.focus();
-}
+};
+
+const toggleForms = () => {
+    editForm.classList.toggle("hide");
+    todoForm.classList.toggle("hide");
+    todoList.classList.toggle("hide");
+};
 
 // Eventos
 todoForm.addEventListener("submit", (event) => {
@@ -49,16 +57,30 @@ todoForm.addEventListener("submit", (event) => {
 document.addEventListener("click", (event) => {
     const targetEl = event.target;
     const parentEl = targetEl.closest("div");
+    let todoTitle;
+
+    if (parentEl && parentEl.querySelector("h3")) {
+        todoTitle = parentEl.querySelector("h3").innerText;
+    }
 
     if (targetEl.classList.contains("finish-todo")) {
         parentEl.classList.toggle("done");
     }
 
     if (targetEl.classList.contains("edit-todo")) {
-        parentEl.classList.toggle("done");
+        toggleForms();
+
+        editInput.value = todoTitle;
+        oldInputValue.value = todoTitle;
     }
 
     if (targetEl.classList.contains("remove-todo")) {
         parentEl.remove();
     }
+})
+
+cancelEditBnt.addEventListener("click", (event) => {
+    event.preventDefault();
+
+    toggleForms();
 })
