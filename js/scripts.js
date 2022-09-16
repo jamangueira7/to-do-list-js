@@ -8,13 +8,74 @@ const cancelEditBnt = document.querySelector("#cancel-edit-btn");
 
 let oldInputValue;
 
+/*
+* Status
+* P - pendente
+* F - Finalizado
+* */
+
+//Funções Local Storage
+const localStorageTodos = JSON.parse(localStorage
+    .getItem('todos'));
+
+let todosStorage = localStorage
+    .getItem('todos') !== null
+    ? localStorageTodos
+    : [];
+
+const updateLocalStorage  = () => {
+    localStorage.setItem('todos', JSON.stringify(todosStorage));
+};
+
+const removeTodo = id => todosStorage.filter(todo => todo.id != id);
+
+const updateTodoLocalStore = id => {
+    todosStorage.forEach((todo) => {
+        if (todo.id == id) {
+            todo.status = todo.status == 'P' ? 'F' : 'P';
+        }
+    });
+    updateLocalStorage();
+}
+
+const removeTransaction = id => {
+    transactions = transactions.filter(transaction => transaction.id !== id);
+    updateLocalStorage();
+    init();
+};
+
+const gererateID = () => Math.round(Math.random() * 1000);
+
+const addTodo = (todoDescription, todoStatus) => {
+    const todo = {
+        id: gererateID(),
+        description: todoDescription,
+        status: todoStatus
+    };
+
+    todosStorage.push(todo);
+};
+
 // Funções
-const saveTodo = (text) => {
+const saveTodo = ({ description, status, id }) => {
+
+    if (!id) {
+        console.log('fasdfdaf');
+        addTodo(description, status);
+        updateLocalStorage();
+
+    }
+
     const todo = document.createElement("div");
-    todo.classList.add("todo");
+    todo.setAttribute('data-id', id);
+
+    todo.classList.add('todo');
+    if (status !== 'P') {
+        todo.classList.add( 'done');
+    }
 
     const todoTitle = document.createElement("h3");
-    todoTitle.innerText = text;
+    todoTitle.innerText = description;
     todo.append(todoTitle);
 
     const doneBtn = document.createElement("button");
@@ -26,6 +87,7 @@ const saveTodo = (text) => {
     editBtn.classList.add("edit-todo");
     editBtn.innerHTML = '<i class="fa-solid fa-pen"></i>';
     todo.append(editBtn);
+
 
     const deleteBtn = document.createElement("button");
     deleteBtn.classList.add("remove-todo");
@@ -55,6 +117,13 @@ const updateTodo = (editInputValue) => {
     });
 };
 
+const init = () => {
+
+    todoList.innerHTML = '';
+    todosStorage.forEach(saveTodo);
+};
+
+init();
 
 // Eventos
 todoForm.addEventListener("submit", (event) => {
@@ -63,7 +132,11 @@ todoForm.addEventListener("submit", (event) => {
     const inputValue = todoInput.value;
 
     if (inputValue) {
-        saveTodo(inputValue);
+        saveTodo({
+            description: inputValue,
+            status: 'P',
+            id: null
+        });
     }
 })
 
@@ -77,6 +150,8 @@ document.addEventListener("click", (event) => {
     }
 
     if (targetEl.classList.contains("finish-todo")) {
+        const id = parentEl.getAttribute('data-id');
+        updateTodoLocalStore(id);
         parentEl.classList.toggle("done");
     }
 
@@ -88,6 +163,9 @@ document.addEventListener("click", (event) => {
     }
 
     if (targetEl.classList.contains("remove-todo")) {
+        const id = parentEl.getAttribute('data-id');
+        todosStorage = removeTodo(id);
+        updateLocalStorage();
         parentEl.remove();
     }
 });
