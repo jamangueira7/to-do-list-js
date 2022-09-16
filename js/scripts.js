@@ -43,6 +43,19 @@ const toggleForms = () => {
     todoList.classList.toggle("hide");
 };
 
+const updateTodo = (editInputValue) => {
+    const todos = document.querySelectorAll(".todo");
+
+    todos.forEach((todo) => {
+        let todoTitle = todo.querySelector("h3");
+
+        if (todoTitle.innerText === oldInputValue) {
+            todoTitle.innerText = editInputValue;
+        }
+    });
+};
+
+
 // Eventos
 todoForm.addEventListener("submit", (event) => {
     event.preventDefault();
@@ -71,16 +84,29 @@ document.addEventListener("click", (event) => {
         toggleForms();
 
         editInput.value = todoTitle;
-        oldInputValue.value = todoTitle;
+        oldInputValue = todoTitle;
     }
 
     if (targetEl.classList.contains("remove-todo")) {
         parentEl.remove();
     }
-})
+});
 
 cancelEditBnt.addEventListener("click", (event) => {
     event.preventDefault();
 
     toggleForms();
-})
+});
+
+
+editForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const editInputValue = editInput.value;
+
+    if(editInputValue) {
+        updateTodo(editInputValue);
+    }
+
+    toggleForms();
+});
