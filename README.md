@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="#rocket-tecnologias">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-tecnologias">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-projeto">Projeto</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-como-rodar">Como rodar</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-como-contribuir">Como contribuir</a>&nbsp;&nbsp;&nbsp;
@@ -19,7 +19,11 @@
   <img alt="app" src=".github/aplicacao3.PNG" width="650px" height="450px">
 </p>
 
-## Curso de JavaScript avançado da School of Net
+<p align="center">
+  <img alt="app" src=".github/aplicacao4.PNG" width="650px" height="450px">
+</p>
+
+## To-do list JS
 
 ## 🚀 Tecnologias
 
@@ -32,14 +36,14 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 
 ## 💻 Projeto
 
-Sistema que guarda uma lista de compras no Local Storage. Faz todo o CRUD da lista.
+Sistema que guarda uma lista de afazeres no Local Storage. Faz todo o CRUD da lista.
 
-Link do curso [aqui](https://www.schoolofnet.com/curso/frontend/javascript/javascript-avancado/)
+Inspirado na video aula do canal - [Matheus Battist](https://www.youtube.com/watch?v=HSssE1PRQcA)
 
 ## 🚀 Como Rodar
 
 - Clone o projeto.
-- Entre no repositório e clice duas vezes no arquivo index.html
+- Entre no repositório e clique duas vezes no arquivo index.html
 
 ## 🤔 Como contribuir
 
