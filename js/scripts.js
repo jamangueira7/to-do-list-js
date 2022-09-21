@@ -8,8 +8,10 @@ const cancelEditBnt = document.querySelector("#cancel-edit-btn");
 const filterSelect = document.querySelector("#filter-select");
 const searchInput = document.querySelector("#search-input");
 const searchBtn = document.querySelector("#search-btn");
+const toolbarDiv = document.querySelector("#toolbar");
 
 let oldInputValue;
+let idUpdate;
 
 /*
 * Status
@@ -30,14 +32,24 @@ const updateLocalStorage  = () => {
     localStorage.setItem('todos', JSON.stringify(todosStorage));
 };
 
-const removeTodo = id => todosStorage.filter(todo => todo.id != id);
+const removeTodo = id => todosStorage.filter(todo => todo.id !== Number(id));
 
-const updateTodoLocalStore = id => {
+const updateStatusLocalStore = id => {
     todosStorage.forEach((todo) => {
-        if (todo.id == id) {
-            todo.status = todo.status == 'P' ? 'F' : 'P';
+        if (todo.id === Number(id)) {
+            todo.status = todo.status === 'P' ? 'F' : 'P';
         }
     });
+    updateLocalStorage();
+}
+
+const updateDescriptionLocalStore = (id, description) => {
+    todosStorage.forEach((todo) => {
+        if (todo.id === Number(id)) {
+            todo.description = description
+        }
+    });
+
     updateLocalStorage();
 }
 
@@ -61,11 +73,11 @@ const searchTransaction = (description) => {
     searchTransactions.forEach(saveTodo);
 };
 
-const gererateID = () => Math.round(Math.random() * 1000);
+const generateID = () => Math.round(Math.random() * 1000);
 
 const addTodo = (todoDescription, todoStatus) => {
     const todo = {
-        id: gererateID(),
+        id: Number(generateID()),
         description: todoDescription,
         status: todoStatus
     };
@@ -119,22 +131,11 @@ const toggleForms = () => {
     editForm.classList.toggle("hide");
     todoForm.classList.toggle("hide");
     todoList.classList.toggle("hide");
+    toolbarDiv.classList.toggle("hide");
 };
 
-const updateTodo = (editInputValue) => {
-    const todos = document.querySelectorAll(".todo");
-
-    todos.forEach((todo) => {
-        let todoTitle = todo.querySelector("h3");
-
-        if (todoTitle.innerText === oldInputValue) {
-            todoTitle.innerText = editInputValue;
-        }
-    });
-};
 
 const init = () => {
-
     todoList.innerHTML = '';
     todosStorage.forEach(saveTodo);
 };
@@ -167,7 +168,7 @@ document.addEventListener("click", (event) => {
 
     if (targetEl.classList.contains("finish-todo")) {
         const id = parentEl.getAttribute('data-id');
-        updateTodoLocalStore(id);
+        updateStatusLocalStore(id);
         parentEl.classList.toggle("done");
     }
 
@@ -175,7 +176,7 @@ document.addEventListener("click", (event) => {
         toggleForms();
 
         editInput.value = todoTitle;
-        oldInputValue = todoTitle;
+        idUpdate = parentEl.getAttribute('data-id');
     }
 
     if (targetEl.classList.contains("remove-todo")) {
@@ -188,8 +189,8 @@ document.addEventListener("click", (event) => {
 
 cancelEditBnt.addEventListener("click", (event) => {
     event.preventDefault();
-
     toggleForms();
+    init();
 });
 
 
@@ -223,8 +224,9 @@ editForm.addEventListener("submit", (event) => {
     const editInputValue = editInput.value;
 
     if(editInputValue) {
-        updateTodo(editInputValue);
+        updateDescriptionLocalStore(idUpdate, editInputValue);
     }
 
+    init();
     toggleForms();
 });
