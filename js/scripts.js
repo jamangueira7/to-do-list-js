@@ -5,6 +5,7 @@ const todoList = document.querySelector("#todo-list");
 const editForm = document.querySelector("#edit-form");
 const editInput = document.querySelector("#edit-input");
 const cancelEditBnt = document.querySelector("#cancel-edit-btn");
+const filterSelect = document.querySelector("#filter-select");
 
 let oldInputValue;
 
@@ -38,10 +39,14 @@ const updateTodoLocalStore = id => {
     updateLocalStorage();
 }
 
-const removeTransaction = id => {
-    transactions = transactions.filter(transaction => transaction.id !== id);
-    updateLocalStorage();
-    init();
+
+const filterTransaction = (status) => {
+    const filterTransactions = todosStorage.filter(
+        transaction => transaction.status === status
+    );
+
+    todoList.innerHTML = '';
+    filterTransactions.forEach(saveTodo);
 };
 
 const gererateID = () => Math.round(Math.random() * 1000);
@@ -60,7 +65,6 @@ const addTodo = (todoDescription, todoStatus) => {
 const saveTodo = ({ description, status, id }) => {
 
     if (!id) {
-        console.log('fasdfdaf');
         addTodo(description, status);
         updateLocalStorage();
 
@@ -174,6 +178,19 @@ cancelEditBnt.addEventListener("click", (event) => {
     event.preventDefault();
 
     toggleForms();
+});
+
+
+filterSelect.addEventListener("change", (event) => {
+    event.preventDefault();
+
+    if(filterSelect.value === 'all') {
+        init();
+        return;
+    }
+
+    const statusFilter = filterSelect.value === 'done'? 'F' : 'P';
+    filterTransaction(statusFilter);
 });
 
 
