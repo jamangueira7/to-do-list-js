@@ -6,6 +6,8 @@ const editForm = document.querySelector("#edit-form");
 const editInput = document.querySelector("#edit-input");
 const cancelEditBnt = document.querySelector("#cancel-edit-btn");
 const filterSelect = document.querySelector("#filter-select");
+const searchInput = document.querySelector("#search-input");
+const searchBtn = document.querySelector("#search-btn");
 
 let oldInputValue;
 
@@ -47,6 +49,16 @@ const filterTransaction = (status) => {
 
     todoList.innerHTML = '';
     filterTransactions.forEach(saveTodo);
+};
+
+
+const searchTransaction = (description) => {
+    const searchTransactions = todosStorage.filter(
+        transaction => transaction.description.toLowerCase().includes(description.toLowerCase())
+    );
+
+    todoList.innerHTML = '';
+    searchTransactions.forEach(saveTodo);
 };
 
 const gererateID = () => Math.round(Math.random() * 1000);
@@ -182,8 +194,6 @@ cancelEditBnt.addEventListener("click", (event) => {
 
 
 filterSelect.addEventListener("change", (event) => {
-    event.preventDefault();
-
     if(filterSelect.value === 'all') {
         init();
         return;
@@ -193,6 +203,19 @@ filterSelect.addEventListener("change", (event) => {
     filterTransaction(statusFilter);
 });
 
+
+searchBtn.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const searchInputValue = searchInput.value;
+
+    if (!searchInputValue) {
+        init();
+        return;
+    }
+
+    searchTransaction(searchInputValue);
+});
 
 editForm.addEventListener("submit", (event) => {
     event.preventDefault();
